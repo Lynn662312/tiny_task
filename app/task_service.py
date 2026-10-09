@@ -54,7 +54,7 @@ def list_tasks() -> list[Task]:
     return [task.copy() for task in _tasks.values()]
 
 # using task id due to its uniqueness, while title is not unique
-def get_task(task_id: int) -> Task:
+def get_task(task_id: int) -> Task | None:
     task = _tasks.get(task_id)
     if task is None:
         raise ValueError(f"Task with id {task_id} not found.")
