@@ -19,18 +19,34 @@ class Task(TypedDict):
 _tasks: dict[int, Task] = {}
 _next_id: int = 1
 
-def complete_task(task_id:int) -> Task:
+def complete_task(task_id:int) -> Task | None:
     task = _tasks.get(task_id)
     if task is None:
-        raise ValueError(f"Task with id {task_id} not found.")
+        # raise ValueError(f"Task with id {task_id} not found.")
+        return None
     task["completed"] = True
     return task.copy()
 
+def update_task_title(task_id:int,title:str) -> Task | None:
+    task = _tasks.get(task_id)
+    if task is None:
+        return None
+    task["title"] = title
+    return task.copy()
+
+def update_task_completed(task_id:int, completed:bool) -> Task | None:
+    task = _tasks.get(task_id)
+    if task is None:
+        return None
+    task["completed"] = completed
+    return task.copy()
+
 def delete_task(task_id: int) ->bool:
-    if task_id in _tasks:
-        del _tasks[task_id]
-        return True
-    return False
+    if task_id not in _tasks:
+        return False
+    del _tasks[task_id]
+    return True
+
 
 #input is title, while output generatte by system (id) and also automatically stored it as list
 def create_task(title: str, completed: bool = False) -> Task:
@@ -56,9 +72,9 @@ def list_tasks() -> list[Task]:
 # using task id due to its uniqueness, while title is not unique
 def get_task(task_id: int) -> Task | None:
     task = _tasks.get(task_id)
-    if task is None:
-        raise ValueError(f"Task with id {task_id} not found.")
-    return task.copy()
+    # if task is None:
+    #     raise ValueError(f"Task with id {task_id} not found.")
+    return task.copy() if task else None
 
 task1= create_task("Task 1", completed=True)
 task2= create_task("Task 2", completed=False)

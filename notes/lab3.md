@@ -20,3 +20,5 @@ ans: FastAPI/Pydantic rejects it before the route function runs, because task_id
 
 What is Content-Type telling the server?
 ans: Content-Type tells the server what format the request body is in. For example, Content-Type: application/json means the request body is JSON.
+
+status code:204 mean success but no response body
